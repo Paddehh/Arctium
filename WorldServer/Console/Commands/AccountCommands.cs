@@ -44,5 +44,29 @@ namespace WorldServer.Console.Commands
             else
                 Log.Message(LogType.Error, "Account {0} already in database", name);
         }
+
+        [Command("daccount", "")]
+        public static void DeleteAccount(string[] args)
+        {
+            string AccountName = Read<string>(args, 0);
+
+            if (AccountName == null)
+                return;
+
+            AccountName = AccountName.ToUpper();
+
+            SQLResult result = DB.Realms.Select("SELECT * FROM accounts WHERE name = ?", AccountName);
+            if (result.Count == 1)
+            {
+                if(DB.Realms.Execute("DELETE FROM accounts WHERE name = ?", AccountName))
+                    Log.Message(LogType.Normal, "Account {0} Deleted Auccessfully", AccountName);
+
+            }
+            else
+            {
+                Log.Message(LogType.Error, "Account {0} Does not exist", AccountName);
+            }
+
+        }
     }
 }
