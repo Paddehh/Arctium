@@ -68,5 +68,27 @@ namespace WorldServer.Console.Commands
             }
 
         }
+
+        [Command("setgmlevel", "")]
+        public static void Set_gm_level(string[] args)
+        {
+            string AccountName = Read<string>(args, 0);
+            string gmlevel = Read<string>(args, 1);
+
+            AccountName = AccountName.ToUpper();
+
+            if (AccountName == null || gmlevel == null)
+                return;
+            SQLResult result = DB.Realms.Select("SELECT * FROM Accounts WHERE name = ?", AccountName);
+            if (result.Count == 1)
+            {
+                if (DB.Realms.Execute("UPDATE Accounts SET gmlevel = ? WHERE name = ?", gmlevel, AccountName))
+                    Log.Message(LogType.Normal, "Sucessfully updated GM level {0} to the account {1}", gmlevel, AccountName);
+            }
+            else
+            {
+                Log.Message(LogType.Error, "Error, Account does not exist");
+            }
+        }
     }
 }
