@@ -20,7 +20,9 @@ namespace Framework.Constants.Authentication
     public enum AuthResults : byte
     {
         WOW_SUCCESS              = 0x00,
+        WOW_FAIL_BANNED          = 0x03,
         WOW_FAIL_UNKNOWN_ACCOUNT = 0x04,
         WOW_FAIL_ALREADY_ONLINE  = 0x06,
+        WOW_FAIL_NO_TIME         = 0x07,
     }
 }
