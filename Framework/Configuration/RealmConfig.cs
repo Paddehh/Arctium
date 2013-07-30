@@ -22,7 +22,7 @@ namespace Framework.Configuration
     public static class RealmConfig
     {
         static Config config = new Config("./Configs/RealmServer.conf");
-
+        public static string ClientBuildMax = config.Read("ClientBuild", "");
         public static string RealmDBHost = config.Read("RealmDB.Host", "");
         public static int RealmDBPort = config.Read("RealmDB.Port", 3306);
         public static string RealmDBUser = config.Read("RealmDB.User", "");

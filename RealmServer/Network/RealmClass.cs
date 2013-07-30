@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Sockets;
 using System.Security.Cryptography;
+using Framework.Configuration;
 using Framework.Constants.Authentication;
 using Framework.Cryptography;
 using Framework.Database;
@@ -84,6 +85,8 @@ namespace Framework.Network.Realm
             account.IP = data.ReadIPAddress();
             account.Name = data.ReadAccountName();
 
+            //should add gametime row.
+
             SQLResult result = DB.Realms.Select("SELECT id, name, password, banned, expansion, gmlevel, securityFlags, online FROM accounts WHERE name = ?", account.Name);
 
             using (var logonChallenge = new PacketWriter())
@@ -99,6 +102,15 @@ namespace Framework.Network.Realm
                         Send(logonChallenge);
                         return;
                     }
+                    //not entirely sure this is going to work, unable to test at the momment, altho same princeable.
+                    if (result.Read<bool>(0, "banned"))
+                    {
+                        logonChallenge.WriteUInt8((byte)AuthResults.WOW_FAIL_BANNED);
+                        Send(logonChallenge);
+                        return;
+                    }
+
+
 
                     account.Id = result.Read<int>(0, "id");
                     account.Expansion = result.Read<byte>(0, "expansion");
@@ -109,6 +121,7 @@ namespace Framework.Network.Realm
                     var username = result.Read<string>(0, "name").ToUpper();
                     var password = result.Read<string>(0, "password").ToUpper();
 
+                    
                     // WoW 5.3.0.17128
                     if (ClientBuild == 17128)
                     {

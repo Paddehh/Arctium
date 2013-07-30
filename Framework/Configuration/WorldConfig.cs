@@ -22,7 +22,7 @@ namespace Framework.Configuration
     public static class WorldConfig
     {
         static Config config = new Config("./Configs/WorldServer.conf");
-
+        
         public static string CharDBHost = config.Read("CharDB.Host", "");
         public static int CharDBPort = config.Read("CharDB.Port", 3306);
         public static string CharDBUser = config.Read("CharDB.User", "");
