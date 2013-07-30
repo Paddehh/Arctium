@@ -84,7 +84,7 @@ namespace Framework.Network.Realm
             account.IP = data.ReadIPAddress();
             account.Name = data.ReadAccountName();
 
-            SQLResult result = DB.Realms.Select("SELECT id, name, password, expansion, gmlevel, securityFlags, online FROM accounts WHERE name = ?", account.Name);
+            SQLResult result = DB.Realms.Select("SELECT id, name, password, banned, expansion, gmlevel, securityFlags, online FROM accounts WHERE name = ?", account.Name);
 
             using (var logonChallenge = new PacketWriter())
             {
