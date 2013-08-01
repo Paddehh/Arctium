@@ -24,5 +24,6 @@ namespace Framework.Constants.Authentication
         WOW_FAIL_UNKNOWN_ACCOUNT = 0x04,
         WOW_FAIL_ALREADY_ONLINE  = 0x06,
         WOW_FAIL_NO_TIME         = 0x07,
+        WOW_FAIL_VERSION_INVALID = 0x09,
     }
 }
